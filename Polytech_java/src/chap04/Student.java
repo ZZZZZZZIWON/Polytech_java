@@ -1,6 +1,6 @@
 package chap04;
 
-public class Student {
+class Student {
 	
 	String dept;
 	int id;
