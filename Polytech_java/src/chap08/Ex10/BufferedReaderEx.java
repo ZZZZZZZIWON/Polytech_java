@@ -48,8 +48,8 @@ public class BufferedReaderEx {
 			String name = scan.next();
 
 			if (map.containsKey(name)) {
-				String number = map.get(name);
-				System.out.println(number);
+				String phone = map.get(name);
+				System.out.println(phone);
 			} else {
 				System.out.println("찾는 이름이 없습니다.");
 			}
