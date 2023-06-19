@@ -13,6 +13,7 @@ public class ProductDAO {
 	String url = "jdbc:mysql://localhost:3305/mydb"; 
 	String id = "root";
 	String pw = "1234";
+	
 	Product p; // 상품 정보를 위한 객체
 	ArrayList<Product> product_test = null;
 
