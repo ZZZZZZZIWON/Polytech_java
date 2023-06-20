@@ -1,4 +1,4 @@
-package midproject;
+package midprojectP;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -34,7 +34,7 @@ public class AppMain extends JFrame implements ActionListener{
 	JComboBox cb;
 	
 	// 데이터출력을 위한 텍스트 영역
-	JTextArea area = new JTextArea(10, 40);
+	JTextArea area;
 	
 	// 등록, 조회, 삭제 메뉴 버튼 
 	JButton b1 = new JButton("등록");
@@ -58,6 +58,7 @@ public class AppMain extends JFrame implements ActionListener{
 	// refreshData : 초기 화면을 제공
 	public void refreshData() {
 		// 기존의 내용을 모두 지우고 초기화
+		
 		area.setText("");
 		t1.setText("");
 		t2.setText("");
@@ -79,7 +80,7 @@ public class AppMain extends JFrame implements ActionListener{
 				sb.append(p.getPcode() + " \t ");
 				sb.append(p.getPname() + " \t ");
 				sb.append(p.getPrice() + " \t ");
-				sb.append(p.getManufacture() + " \t ");
+				sb.append(p.getManufacture() + " \t  \n");
 				area.append(sb.toString());
 			}
 		}
@@ -102,7 +103,7 @@ public class AppMain extends JFrame implements ActionListener{
 			
 			//등록인 경우 
 			if(editmode == false) {
-				if(dao.insertProd(product)) 
+				if(dao.newProduct(product)) 
 					msg1.setText("상품이 등록되었습니다.");
 				else 
 					msg1.setText("상품등록을 실패했습니다.");
@@ -110,7 +111,7 @@ public class AppMain extends JFrame implements ActionListener{
 			//수정인 경우
 			else if (editmode == true) {
 				product.setPcode(Integer.parseInt((String)cb.getSelectedItem()));
-				if(dao.updateProd(product)) { 
+				if(dao.updateProduct(product)) { 
 					msg1.setText("상품이 수정되었습니다.");
 					t1.setText("");
 					t2.setText("");
@@ -129,7 +130,7 @@ public class AppMain extends JFrame implements ActionListener{
 			}
 			else
 			{
-				product = dao.getOne(Integer.parseInt(item));
+				product = dao.getProduct(Integer.parseInt(item));
 				if(product != null) {
 					t1.setText(product.getPname());
 					t2.setText(String.valueOf(product.getPrice()));
@@ -147,7 +148,7 @@ public class AppMain extends JFrame implements ActionListener{
 				msg1.setText("전체삭제는 되지 않습니다.");
 			}
 			else {
-				if(dao.deleteProd(Integer.parseInt(item))) {
+				if(dao.delProduct(Integer.parseInt(item))){
 					msg1.setText("삭제가 되었습니다");
 				}
 				else {
@@ -156,9 +157,9 @@ public class AppMain extends JFrame implements ActionListener{
 			}
 			refreshData(); //화면 갱신
 		}
-		}
+	}
 	
-	public void AppMain(){
+	public AppMain(){
 		setTitle("프로그램이 시작되었습니다.");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
@@ -169,10 +170,13 @@ public class AppMain extends JFrame implements ActionListener{
 		p2.setLayout(new GridLayout(4, 1, 20, 2));
 		
 		// 스크롤 기능이 들어가도록 area 를 조정
-		JScrollPane scroll = new JScrollPane(area, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		cb = new JComboBox();
+		area = new JTextArea(10, 40);
+		JScrollPane scroll = new JScrollPane(area, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+
 		
 		// refreshData 메소드 호출
+		//refreshData();
 		
 		// 각각의 등록(b1),조회(b2),삭제(b3) 버튼에 이벤트 리스터 추가
 		b1.addActionListener(this);
@@ -205,8 +209,7 @@ public class AppMain extends JFrame implements ActionListener{
 	}
 	
 	public static void main(String[] args) {
-		AppMainM app = new AppMainM();
+		AppMain app = new AppMain();
 		app.refreshData();
 	}
-
 }
